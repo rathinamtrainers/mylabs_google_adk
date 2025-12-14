@@ -1,0 +1,2 @@
+# Lab 1: Context & State - Dependencies
+google-adk>=0.1.0

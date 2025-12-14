@@ -1,0 +1,2 @@
+# Lab 3: Callbacks & Plugins - Dependencies
+google-adk>=0.1.0

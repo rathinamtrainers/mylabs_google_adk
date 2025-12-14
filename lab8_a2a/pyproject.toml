@@ -1,0 +1,11 @@
+[project]
+name = "lab8-a2a"
+version = "0.1.0"
+description = "A2A (Agent-to-Agent) Protocol Lab"
+requires-python = ">=3.12"
+dependencies = [
+    "google-adk>=1.19.0",
+    "uvicorn>=0.30.0",
+    "a2a-sdk>=0.3.0",
+    "httpx>=0.28.0",
+]

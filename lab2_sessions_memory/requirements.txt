@@ -1,0 +1,2 @@
+# Lab 2: Sessions & Memory - Dependencies
+google-adk>=0.1.0

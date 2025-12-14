@@ -1,0 +1,9 @@
+[project]
+name = "lab7-artifacts"
+version = "0.1.0"
+description = "Lab 7: Artifacts - Managing binary data with ADK"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "google-adk>=1.19.0",
+]

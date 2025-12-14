@@ -1,0 +1,2 @@
+# Lab 4: Multi-Agent & MCP - Dependencies
+google-adk>=0.1.0

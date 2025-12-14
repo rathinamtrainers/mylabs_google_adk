@@ -1,0 +1,8 @@
+[project]
+name = "lab3-callbacks-plugins"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.12"
+dependencies = [
+    "google-adk>=1.19.0",
+]
