@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-This repository contains hands-on labs for learning Google ADK (Agent Development Kit) components. Each lab is a standalone Python project with its own virtual environment.
+This repository contains hands-on labs for learning Google ADK (Agent Development Kit) components. Each lab is a standalone Python project with its own virtual environment using `uv`.
 
 ## Reference Resources
 
@@ -15,17 +15,19 @@ This repository contains hands-on labs for learning Google ADK (Agent Developmen
 
 ### Running Lab Exercises
 
-Each lab uses `uv` for dependency management:
-
 ```bash
 cd lab<N>_<topic>
 uv run python <exercise_file>.py
 ```
 
-Example:
+### Running with ADK Dev Server (Web UI)
+
 ```bash
-cd lab1_context_state
-uv run python 01_context_types.py
+cd lab<N>_<topic>
+uv run adk web
+# Or for streaming agents:
+cd adk-streaming
+uv run adk web app/
 ```
 
 ### Environment Setup
@@ -61,10 +63,14 @@ Labs are ordered by learning progression:
 ### Lab Internal Structure
 
 Each lab follows a consistent pattern:
-- `pyproject.toml` - Dependencies (google-adk)
+- `pyproject.toml` - Dependencies (google-adk >= 1.19.0, Python >= 3.12)
 - `README.md` - Concepts and usage
 - `01_*.py` through `05_*.py` - Progressive exercises
-- `.venv/` - Local virtual environment
+- `.venv/` - Local virtual environment (gitignored)
+
+### Additional Projects
+
+- `adk-streaming/` - Standalone agent for ADK web UI streaming demos
 
 ### Learning Dependency Chain
 
@@ -96,3 +102,27 @@ Context & State → Sessions & Memory → Callbacks & Plugins → Multi-Agent & 
 - `RemoteA2aAgent` - Consume remote A2A agents as sub-agents
 - `AgentCardBuilder` - Auto-generate agent cards
 - Well-known endpoint: `/.well-known/agent-card.json`
+
+## Exercise Code Patterns
+
+Exercises follow a standard async pattern:
+
+```python
+import asyncio
+from google.adk.agents import LlmAgent
+from google.adk.runners import Runner
+from google.adk.sessions import InMemorySessionService
+from google.genai import types
+
+async def main():
+    session_service = InMemorySessionService()
+    runner = Runner(agent=agent, app_name="demo", session_service=session_service)
+    session = await session_service.create_session(app_name="demo", user_id="user", session_id="sess")
+
+    async for event in runner.run_async(user_id="user", session_id="sess", new_message=message):
+        if event.is_final_response() and event.content:
+            print(event.content.parts[0].text)
+
+if __name__ == "__main__":
+    asyncio.run(main())
+```
