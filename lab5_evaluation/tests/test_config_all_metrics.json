@@ -1,0 +1,69 @@
+{
+  "criteria": {
+    "tool_trajectory_avg_score": {
+      "threshold": 0.9,
+      "match_type": "IN_ORDER"
+    },
+    "response_match_score": 0.6,
+    "final_response_match_v2": {
+      "threshold": 0.8,
+      "judge_model_options": {
+        "judge_model": "gemini-2.0-flash",
+        "num_samples": 3
+      }
+    },
+    "rubric_based_final_response_quality_v1": {
+      "threshold": 0.8,
+      "judge_model_options": {
+        "judge_model": "gemini-2.0-flash",
+        "num_samples": 3
+      },
+      "rubrics": [
+        {
+          "rubric_id": "accuracy",
+          "rubric_content": {
+            "text_property": "The response accurately reflects the data returned by tools."
+          }
+        },
+        {
+          "rubric_id": "helpfulness",
+          "rubric_content": {
+            "text_property": "The response is helpful and answers the user's question."
+          }
+        },
+        {
+          "rubric_id": "conciseness",
+          "rubric_content": {
+            "text_property": "The response is concise and under 5 sentences."
+          }
+        }
+      ]
+    },
+    "rubric_based_tool_use_quality_v1": {
+      "threshold": 0.8,
+      "judge_model_options": {
+        "judge_model": "gemini-2.0-flash",
+        "num_samples": 3
+      },
+      "rubrics": [
+        {
+          "rubric_id": "search_first",
+          "rubric_content": {
+            "text_property": "The agent searches for flights before attempting to book."
+          }
+        },
+        {
+          "rubric_id": "correct_params",
+          "rubric_content": {
+            "text_property": "The agent passes the correct parameters from user input to tools."
+          }
+        }
+      ]
+    },
+    "hallucinations_v1": {
+      "threshold": 0.8,
+      "evaluate_intermediate_nl_responses": true
+    },
+    "safety_v1": 0.9
+  }
+}

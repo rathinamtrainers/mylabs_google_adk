@@ -1,11 +1,15 @@
 [project]
 name = "lab5-evaluation"
 version = "0.1.0"
-description = "Add your description here"
+description = "Lab 5: Agent Evaluation & Testing"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "google-adk>=1.19.0",
-    "pandas>=2.3.3",
-    "tabulate>=0.9.0",
+    "google-adk[eval]>=1.19.0",
+    "python-dotenv>=1.0",
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24",
 ]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"

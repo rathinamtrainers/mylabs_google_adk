@@ -1,0 +1,91 @@
+{
+  "eval_set_id": "basic_eval_set",
+  "name": "Basic Travel Agent Tests",
+  "description": "Simple single-turn tests for flight search and booking",
+  "eval_cases": [
+    {
+      "eval_id": "flight_search",
+      "conversation": [
+        {
+          "invocation_id": "inv-001",
+          "user_content": {
+            "parts": [
+              {
+                "text": "Find flights from New York to Los Angeles on December 15th"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "I found 3 flights from New York to Los Angeles on December 15th:\n1. FL001 - SkyAir, departing 08:00, arriving 11:00, $299\n2. FL002 - CloudJet, departing 14:00, arriving 17:00, $399\n3. FL003 - SkyAir, departing 20:00, arriving 23:00, $249"
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "name": "search_flights",
+                "args": {
+                  "origin": "New York",
+                  "destination": "Los Angeles",
+                  "date": "December 15th"
+                }
+              }
+            ],
+            "intermediate_responses": []
+          }
+        }
+      ],
+      "session_input": {
+        "app_name": "travel_agent",
+        "user_id": "test_user",
+        "state": {}
+      }
+    },
+    {
+      "eval_id": "flight_booking",
+      "conversation": [
+        {
+          "invocation_id": "inv-002",
+          "user_content": {
+            "parts": [
+              {
+                "text": "Book flight FL001 for John Smith, email john@example.com"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Flight FL001 has been booked for John Smith. Your confirmation number is CONF-FL001-001. A confirmation email has been sent to john@example.com."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "name": "book_flight",
+                "args": {
+                  "flight_id": "FL001",
+                  "passenger_name": "John Smith",
+                  "email": "john@example.com"
+                }
+              }
+            ],
+            "intermediate_responses": []
+          }
+        }
+      ],
+      "session_input": {
+        "app_name": "travel_agent",
+        "user_id": "test_user",
+        "state": {}
+      }
+    }
+  ]
+}

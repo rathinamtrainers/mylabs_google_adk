@@ -1,0 +1,87 @@
+{
+  "eval_set_id": "trajectory_eval_set",
+  "name": "Trajectory Evaluation Tests",
+  "description": "Tests for trajectory matching with different match types",
+  "eval_cases": [
+    {
+      "eval_id": "simple_search",
+      "conversation": [
+        {
+          "invocation_id": "inv-001",
+          "user_content": {
+            "parts": [{"text": "Search for flights from Chicago to Miami on January 10th"}],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [{"text": "I found flights from Chicago to Miami on January 10th."}],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "name": "search_flights",
+                "args": {"origin": "Chicago", "destination": "Miami", "date": "January 10th"}
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "eval_id": "search_then_book",
+      "conversation": [
+        {
+          "invocation_id": "inv-002",
+          "user_content": {
+            "parts": [{"text": "Find flights from New York to LA on Dec 20 and book FL001 for Alice Wong, alice@test.com"}],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [{"text": "I searched for flights and booked FL001 for Alice Wong. Confirmation: CONF-FL001-001"}],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "name": "search_flights",
+                "args": {"origin": "New York", "destination": "LA", "date": "Dec 20"}
+              },
+              {
+                "name": "book_flight",
+                "args": {"flight_id": "FL001", "passenger_name": "Alice Wong", "email": "alice@test.com"}
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "eval_id": "search_and_weather",
+      "conversation": [
+        {
+          "invocation_id": "inv-003",
+          "user_content": {
+            "parts": [{"text": "I want to fly to Miami from New York on Feb 1. Also, what's the weather like there?"}],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [{"text": "I found flights to Miami and the weather there is sunny at 80°F."}],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "name": "search_flights",
+                "args": {"origin": "New York", "destination": "Miami", "date": "Feb 1"}
+              },
+              {
+                "name": "get_weather",
+                "args": {"city": "Miami"}
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

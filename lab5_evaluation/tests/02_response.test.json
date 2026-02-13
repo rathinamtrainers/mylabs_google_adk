@@ -1,0 +1,91 @@
+{
+  "eval_set_id": "response_eval_set",
+  "name": "Response Evaluation Tests",
+  "description": "Tests with varying response similarity to demonstrate ROUGE-1 vs semantic matching",
+  "eval_cases": [
+    {
+      "eval_id": "exact_match",
+      "conversation": [
+        {
+          "invocation_id": "inv-001",
+          "user_content": {
+            "parts": [{"text": "What's the weather in Los Angeles?"}],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [{"text": "The weather in Los Angeles is sunny with a temperature of 72°F and humidity at 30%."}],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {"name": "get_weather", "args": {"city": "Los Angeles"}}
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "eval_id": "paraphrase",
+      "conversation": [
+        {
+          "invocation_id": "inv-002",
+          "user_content": {
+            "parts": [{"text": "How's the weather in Miami?"}],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [{"text": "Miami is currently experiencing sunny weather. The temperature is 80°F with 75% humidity."}],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {"name": "get_weather", "args": {"city": "Miami"}}
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "eval_id": "partial_match",
+      "conversation": [
+        {
+          "invocation_id": "inv-003",
+          "user_content": {
+            "parts": [{"text": "What's the weather like in Chicago?"}],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [{"text": "Chicago weather: 28°F, snowy, 70% humidity. Bundle up!"}],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {"name": "get_weather", "args": {"city": "Chicago"}}
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "eval_id": "wrong_answer",
+      "conversation": [
+        {
+          "invocation_id": "inv-004",
+          "user_content": {
+            "parts": [{"text": "What's the weather in New York?"}],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [{"text": "New York currently has cloudy skies with a temperature of 35°F and humidity at 65%."}],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {"name": "get_weather", "args": {"city": "New York"}}
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

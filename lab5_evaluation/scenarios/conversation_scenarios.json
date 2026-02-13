@@ -1,0 +1,16 @@
+{
+  "scenarios": [
+    {
+      "starting_prompt": "I need to book a flight.",
+      "conversation_plan": "Search for flights from New York to Los Angeles on December 15th. Ask about the cheapest option. Book it for Jane Doe, jane@example.com."
+    },
+    {
+      "starting_prompt": "Can you help me with travel?",
+      "conversation_plan": "Ask about flights to Chicago. Change your mind and ask about flights to Miami instead. Pick the afternoon flight."
+    },
+    {
+      "starting_prompt": "I need to cancel my booking.",
+      "conversation_plan": "Provide confirmation number CONF-FL001-001 and ask to cancel. Confirm the cancellation."
+    }
+  ]
+}

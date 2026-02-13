@@ -1,0 +1,122 @@
+{
+  "eval_set_id": "multiturn_eval_set",
+  "name": "Multi-Turn Conversation Tests",
+  "description": "Tests for multi-turn conversations with stateful agent behavior",
+  "eval_cases": [
+    {
+      "eval_id": "booking_flow",
+      "conversation": [
+        {
+          "invocation_id": "turn-1",
+          "user_content": {
+            "parts": [{"text": "Find flights from New York to Los Angeles on December 15th"}],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [{"text": "I found 3 flights from New York to Los Angeles on December 15th:\n1. FL001 - SkyAir at 08:00, $299\n2. FL002 - CloudJet at 14:00, $399\n3. FL003 - SkyAir at 20:00, $249"}],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "name": "search_flights",
+                "args": {"origin": "New York", "destination": "Los Angeles", "date": "December 15th"}
+              }
+            ]
+          }
+        },
+        {
+          "invocation_id": "turn-2",
+          "user_content": {
+            "parts": [{"text": "Tell me more about FL001"}],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [{"text": "FL001 details: Economy class, $299, includes 1 carry-on bag and a snack."}],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "name": "get_flight_details",
+                "args": {"flight_id": "FL001"}
+              }
+            ]
+          }
+        },
+        {
+          "invocation_id": "turn-3",
+          "user_content": {
+            "parts": [{"text": "Book it for John Smith, john@example.com"}],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [{"text": "Flight FL001 booked for John Smith. Confirmation number: CONF-FL001-001. A confirmation email has been sent to john@example.com."}],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "name": "book_flight",
+                "args": {"flight_id": "FL001", "passenger_name": "John Smith", "email": "john@example.com"}
+              }
+            ]
+          }
+        }
+      ],
+      "session_input": {
+        "app_name": "travel_agent",
+        "user_id": "test_user",
+        "state": {}
+      }
+    },
+    {
+      "eval_id": "search_then_cancel",
+      "conversation": [
+        {
+          "invocation_id": "turn-1",
+          "user_content": {
+            "parts": [{"text": "Search for flights from Chicago to Miami on January 5th"}],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [{"text": "I found flights from Chicago to Miami on January 5th."}],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "name": "search_flights",
+                "args": {"origin": "Chicago", "destination": "Miami", "date": "January 5th"}
+              }
+            ]
+          }
+        },
+        {
+          "invocation_id": "turn-2",
+          "user_content": {
+            "parts": [{"text": "Actually, I need to cancel my existing booking CONF-FL001-001"}],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [{"text": "Your booking CONF-FL001-001 has been cancelled. A refund will be processed in 5-7 days."}],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "name": "cancel_booking",
+                "args": {"confirmation_number": "CONF-FL001-001"}
+              }
+            ]
+          }
+        }
+      ],
+      "session_input": {
+        "app_name": "travel_agent",
+        "user_id": "test_user",
+        "state": {"user:loyalty_tier": "gold"}
+      }
+    }
+  ]
+}
